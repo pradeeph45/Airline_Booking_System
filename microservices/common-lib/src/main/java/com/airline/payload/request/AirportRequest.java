@@ -37,6 +37,4 @@ public class AirportRequest {
     @Valid
     private GeoCode geoCode;
 
-
-
 }

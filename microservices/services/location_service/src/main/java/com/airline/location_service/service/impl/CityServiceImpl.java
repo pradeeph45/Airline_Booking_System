@@ -47,6 +47,7 @@ public class CityServiceImpl implements CityService {
         }
 
         City updatedCity = CityMapper.updateCity(city,cityRequest);
+        cityRepository.save(updatedCity);
         return CityMapper.toResponse(updatedCity);
     }
 

@@ -17,7 +17,7 @@ import java.util.List;
 @RequestMapping("/api/airport")
 public class AirportController {
 
-    private AirportService airportService;
+    private final AirportService airportService;
 
     @PostMapping
     public ResponseEntity<AirportResponse> createAirport(

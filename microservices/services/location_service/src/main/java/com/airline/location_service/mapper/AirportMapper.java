@@ -28,6 +28,7 @@ public class AirportMapper {
                 .detailedName(airport.getDetailedName())
                // .timeZone(airport.getTimeZoneId())
                 .address(airport.getAddress())
+                .city(CityMapper.toResponse(airport.getCity()))
                 .geoCode(airport.getGeoCode())
                 .build();
     }
