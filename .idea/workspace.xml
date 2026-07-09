@@ -1,0 +1,111 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="SELECTIVE" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="ad4716b7-d6b0-4312-9de7-a0d42e0801cd" name="Changes" comment="">
+      <change afterPath="$PROJECT_DIR$/microservices/common-lib/src/main/java/com/airline/enums/UserRole.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/common-lib/src/main/java/com/airline/payload/dto/UserDTO.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/common-lib/src/main/java/com/airline/payload/response/AuthResponse.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/services/user_service/src/main/java/com/airline/user_service/config/JwtConstant.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/services/user_service/src/main/java/com/airline/user_service/config/JwtProvider.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/services/user_service/src/main/java/com/airline/user_service/config/SecurityConfig.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/services/user_service/src/main/java/com/airline/user_service/controller/HomeController.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/services/user_service/src/main/java/com/airline/user_service/model/User.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/services/user_service/src/main/java/com/airline/user_service/repository/UserRepository.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/services/user_service/src/main/java/com/airline/user_service/service/AuthService.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/services/user_service/src/main/java/com/airline/user_service/service/impl/AuthServiceImpl.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/.gitignore" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/services/location_service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/services/location_service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/services/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/services/pom.xml" afterDir="false" />
+    </list>
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="EmbeddingIndexingInfo">
+    <option name="cachedIndexableFilesCount" value="50" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Interface" />
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="McpProjectServerCommands">
+    <commands />
+    <urls />
+  </component>
+  <component name="ProjectColorInfo"><![CDATA[{
+  "customColor": "",
+  "associatedIndex": 6
+}]]></component>
+  <component name="ProjectId" id="3GFXsG7HjH5xK7M8JSHUrwjQm1a" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="showLibraryContents" value="true" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ModuleVcsDetector.initialDetectionPerformed": "true",
+    "RunOnceActivity.MCP Project settings loaded": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "Spring Boot.UserServiceApplication.executor": "Run",
+    "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
+    "git-widget-placeholder": "main",
+    "junie.onboarding.icon.badge.shown": "true",
+    "kotlin-language-version-configured": "true",
+    "to.speed.mode.migration.done": "true"
+  }
+}]]></component>
+  <component name="RunManager">
+    <configuration name="UserServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="user_service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.airline.user_service.UserServiceApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.airline.user_service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Spring Boot.UserServiceApplication" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-jdk-30f59d01ecdd-2fc7cc6b9a17-intellij.indexing.shared.core-IU-253.30387.90" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="ad4716b7-d6b0-4312-9de7-a0d42e0801cd" name="Changes" comment="" />
+      <created>1783568501559</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1783568501559</updated>
+    </task>
+    <servers />
+  </component>
+</project>
