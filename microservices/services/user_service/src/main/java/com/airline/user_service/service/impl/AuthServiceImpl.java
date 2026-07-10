@@ -47,7 +47,7 @@ public class AuthServiceImpl implements AuthService {
          authResponse.setJwt(jwt);
          authResponse.setUserDTO(UserMapper.toDTO(user));
          authResponse.setTitle("Welcome "+user.getFullName());
-         authResponse.setMessage("Registered successfully");
+         authResponse.setMessage("Logged in successfully");
          return authResponse;
     }
 
@@ -90,6 +90,7 @@ public class AuthServiceImpl implements AuthService {
                 .password(passwordEncoder.encode(req.getPassword()))
                 .fullName(req.getFullName())
                 .phone(req.getPhone())
+                .userRole(req.getRole())
                 .lastLogin(LocalDateTime.now())
                 .createdAt(LocalDateTime.now())
                 .updatedAt(LocalDateTime.now())

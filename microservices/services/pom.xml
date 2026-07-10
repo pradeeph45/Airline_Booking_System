@@ -35,7 +35,7 @@
 
     <modules>
         <module>user_service</module>
-<!--        <module>airline-core-service</module>-->
+       <module>airline_core_service</module>
         <module>location_service</module>
 <!--        <module>seat-service</module>-->
 <!--        <module>flight-ops-service</module>-->
