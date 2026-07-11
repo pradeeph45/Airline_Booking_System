@@ -1,0 +1,81 @@
+package com.airline.airline_core_service.mapper;
+
+import com.airline.airline_core_service.model.Airline;
+import com.airline.embeddable.Support;
+import com.airline.payload.request.AirlineRequest;
+import com.airline.payload.response.AirlineResponse;
+
+public class AirlineMapper {
+
+    public static Airline toEntity(AirlineRequest request, Long ownerId) {
+        if (request == null) return null;
+
+        Airline airline = Airline.builder()
+                .iataCode(request.getIataCode())
+                .icaoCode(request.getIcaoCode())
+                .name(request.getName())
+                .alias(request.getAlias())
+                .country(request.getCountry())
+                .logoUrl(request.getLogoUrl())
+                .website(request.getWebsite())
+                .airlineStatus(request.getAirlineStatus())
+                .alliance(request.getAlliance())
+                .headquatersCityId(request.getHeadquatersCityId())
+                .ownerId(ownerId)
+                .build();
+
+        if (request.getSupportEmail() != null || request.getSupportPhone() != null
+                || request.getSupportHours() != null) {
+            airline.setSupport(Support.builder()
+                    .email(request.getSupportEmail())
+                    .phone(request.getSupportPhone())
+                    .hours(request.getSupportHours())
+                    .build());
+        }
+        return airline;
+    }
+
+    public static AirlineResponse toResponse(Airline airline) {
+        if (airline == null) return null;
+
+        return AirlineResponse.builder()
+                .id(airline.getId())
+                .iataCode(airline.getIataCode())
+                .icaoCode(airline.getIcaoCode())
+                .name(airline.getName())
+                .alias(airline.getAlias())
+                .logoUrl(airline.getLogoUrl())
+                .website(airline.getWebsite())
+                .airlineStatus(airline.getAirlineStatus())
+                .alliance(airline.getAlliance())
+                .support(airline.getSupport())
+                .support(airline.getSupport())
+                .createdAt(airline.getCreatedAt())
+                .updatedAt(airline.getUpdatedAt())
+                .ownerId(airline.getOwnerId())
+                .updatedById(airline.getUpdatedById())
+                .build();
+    }
+
+    public static void updateEntity(Airline airline, AirlineRequest request) {
+        if (airline == null || request == null) return;
+
+        airline.setIataCode(request.getIataCode());
+        airline.setIcaoCode(request.getIcaoCode());
+        airline.setName(request.getName());
+        airline.setAlias(request.getAlias());
+        airline.setCountry(request.getCountry());
+        airline.setLogoUrl(request.getLogoUrl());
+        airline.setWebsite(request.getWebsite());
+        airline.setAirlineStatus(request.getAirlineStatus());
+        airline.setAlliance(request.getAlliance());
+        airline.setHeadquatersCityId(request.getHeadquatersCityId());
+
+        if (airline.getSupport() == null) {
+            airline.setSupport(new Support());
+        }
+        airline.getSupport().setEmail(request.getSupportEmail());
+        airline.getSupport().setPhone(request.getSupportPhone());
+        airline.getSupport().setHours(request.getSupportHours());
+    }
+}
