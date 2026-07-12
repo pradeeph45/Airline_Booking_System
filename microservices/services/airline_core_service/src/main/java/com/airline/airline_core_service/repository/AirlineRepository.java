@@ -13,5 +13,5 @@ public interface AirlineRepository extends JpaRepository<Airline,Long> {
 
     Optional<Airline> findByOwnerId(Long ownerId);
 
-    List<Airline> findByStatus(AirlineStatus airlineStatus);
+    List<Airline> findByAirlineStatus(AirlineStatus airlineStatus);
 }

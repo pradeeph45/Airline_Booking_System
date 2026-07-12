@@ -49,7 +49,6 @@ public class AirlineMapper {
                 .airlineStatus(airline.getAirlineStatus())
                 .alliance(airline.getAlliance())
                 .support(airline.getSupport())
-                .support(airline.getSupport())
                 .createdAt(airline.getCreatedAt())
                 .updatedAt(airline.getUpdatedAt())
                 .ownerId(airline.getOwnerId())

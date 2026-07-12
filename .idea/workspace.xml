@@ -5,18 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ad4716b7-d6b0-4312-9de7-a0d42e0801cd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/microservices/common-lib/src/main/java/com/airline/embeddable/Support.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/common-lib/src/main/java/com/airline/enums/AirlineStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/common-lib/src/main/java/com/airline/payload/request/AirlineRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/common-lib/src/main/java/com/airline/payload/response/AirlineDropdownItem.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/common-lib/src/main/java/com/airline/payload/response/AirlineResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/controller/AirlineController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/mapper/AirlineMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/model/Airline.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/repository/AirlineRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/service/AirlineService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/service/impl/AirlineServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/mapper/AirlineMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/mapper/AirlineMapper.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/repository/AirlineRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/repository/AirlineRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/resources/application.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservices/services/location_service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/services/location_service/src/main/resources/application.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservices/services/user_service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/services/user_service/src/main/resources/application.yaml" afterDir="false" />
