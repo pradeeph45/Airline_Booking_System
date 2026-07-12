@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Service
@@ -84,7 +85,7 @@ public class AirlineServiceImpl implements AirlineService {
 
     @Override
     public List<AirlineDropdownItem> getAirlineDropdown() {
-        return   airlineRepository.findByStatus(AirlineStatus.ACTIVE)
+        return   airlineRepository.findByAirlineStatus(AirlineStatus.ACTIVE)
                 .stream()
                 .map(a -> AirlineDropdownItem.builder()
                         .id(a.getId())

@@ -36,7 +36,7 @@ public class AirlineRequest {
     @NotBlank
     private String country;
 
-    private Long headquatersCityId;
+    private Long headquartersCityId;
 
     private String supportEmail;
 

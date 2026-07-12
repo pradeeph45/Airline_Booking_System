@@ -20,7 +20,7 @@ public class AirlineMapper {
                 .website(request.getWebsite())
                 .airlineStatus(request.getAirlineStatus())
                 .alliance(request.getAlliance())
-                .headquatersCityId(request.getHeadquatersCityId())
+                .headquartersCityId(request.getHeadquartersCityId())
                 .ownerId(ownerId)
                 .build();
 
@@ -68,7 +68,7 @@ public class AirlineMapper {
         airline.setWebsite(request.getWebsite());
         airline.setAirlineStatus(request.getAirlineStatus());
         airline.setAlliance(request.getAlliance());
-        airline.setHeadquatersCityId(request.getHeadquatersCityId());
+        airline.setHeadquartersCityId(request.getHeadquartersCityId());
 
         if (airline.getSupport() == null) {
             airline.setSupport(new Support());

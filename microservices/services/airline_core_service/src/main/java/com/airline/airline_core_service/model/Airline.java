@@ -6,6 +6,7 @@ import jakarta.persistence.*;
 import lombok.*;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.time.Instant;
 
@@ -15,6 +16,7 @@ import java.time.Instant;
 @Builder
 @Getter
 @Setter
+@EntityListeners(AuditingEntityListener.class)
 public class Airline {
 
     @Id
@@ -47,7 +49,7 @@ public class Airline {
     @Column(nullable = false)
     private String country;
 
-    private Long headquatersCityId;
+    private Long headquartersCityId;
 
     @Embedded
     private Support support;
