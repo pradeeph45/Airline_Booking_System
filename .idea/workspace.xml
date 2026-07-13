@@ -5,23 +5,13 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="ad4716b7-d6b0-4312-9de7-a0d42e0801cd" name="Changes" comment="">
-      <change afterPath="$PROJECT_DIR$/microservices/common-lib/src/main/java/com/airline/enums/AircraftStatus.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/common-lib/src/main/java/com/airline/payload/request/AircraftRequest.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/common-lib/src/main/java/com/airline/payload/response/AircraftResponse.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/controller/AircraftController.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/mapper/AircraftMapper.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/model/Aircraft.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/repository/AircraftRepository.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/service/AircraftService.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/service/impl/AircraftServiceImpl.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/microservices/services/flight_ops_service/src/main/java/com/airline/flight_ops_service/controller/HomeController.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/compiler.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/compiler.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/encodings.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/encodings.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/common-lib/src/main/java/com/airline/payload/request/AirlineRequest.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/common-lib/src/main/java/com/airline/payload/request/AirlineRequest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/AirlineCoreServiceApplication.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/AirlineCoreServiceApplication.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/mapper/AirlineMapper.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/mapper/AirlineMapper.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/model/Airline.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/model/Airline.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/service/impl/AirlineServiceImpl.java" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/java/com/airline/airline_core_service/service/impl/AirlineServiceImpl.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/services/airline_core_service/src/main/resources/application.yaml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservices/services/location_service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/services/location_service/src/main/resources/application.yaml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/microservices/services/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/services/pom.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/microservices/services/user_service/src/main/resources/application.yaml" beforeDir="false" afterPath="$PROJECT_DIR$/microservices/services/user_service/src/main/resources/application.yaml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -67,16 +57,17 @@
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "RunOnceActivity.git.unshallow": "true",
     "Spring Boot.AirlineCoreServiceApplication.executor": "Run",
+    "Spring Boot.FlightOpsServiceApplication.executor": "Run",
     "Spring Boot.UserServiceApplication.executor": "Run",
     "com.intellij.ml.llm.matterhorn.ej.ui.settings.DefaultModelSelectionForGA.v1": "true",
-    "git-widget-placeholder": "Aircraft-Inventory-API",
+    "git-widget-placeholder": "Flight-scheduling-and-management",
     "junie.onboarding.icon.badge.shown": "true",
     "kotlin-language-version-configured": "true",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "to.speed.mode.migration.done": "true"
   }
 }]]></component>
-  <component name="RunManager" selected="Spring Boot.AirlineCoreServiceApplication">
+  <component name="RunManager" selected="Spring Boot.FlightOpsServiceApplication">
     <configuration name="AirlineCoreServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
       <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
       <module name="airline_core_service" />
@@ -84,6 +75,20 @@
       <extension name="coverage">
         <pattern>
           <option name="PATTERN" value="com.airline.airline_core_service.*" />
+          <option name="ENABLED" value="true" />
+        </pattern>
+      </extension>
+      <method v="2">
+        <option name="Make" enabled="true" />
+      </method>
+    </configuration>
+    <configuration name="FlightOpsServiceApplication" type="SpringBootApplicationConfigurationType" factoryName="Spring Boot" temporary="true" nameIsGenerated="true">
+      <option name="FRAME_DEACTIVATION_UPDATE_POLICY" value="UnknownPolicyInFreeMode" />
+      <module name="flight_ops_service" />
+      <option name="SPRING_BOOT_MAIN_CLASS" value="com.airline.flight_ops_service.FlightOpsServiceApplication" />
+      <extension name="coverage">
+        <pattern>
+          <option name="PATTERN" value="com.airline.flight_ops_service.*" />
           <option name="ENABLED" value="true" />
         </pattern>
       </extension>
@@ -107,6 +112,7 @@
     </configuration>
     <recent_temporary>
       <list>
+        <item itemvalue="Spring Boot.FlightOpsServiceApplication" />
         <item itemvalue="Spring Boot.AirlineCoreServiceApplication" />
         <item itemvalue="Spring Boot.UserServiceApplication" />
       </list>

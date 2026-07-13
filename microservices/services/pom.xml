@@ -35,10 +35,10 @@
 
     <modules>
         <module>user_service</module>
-       <module>airline_core_service</module>
+        <module>airline_core_service</module>
         <module>location_service</module>
 <!--        <module>seat-service</module>-->
-<!--        <module>flight-ops-service</module>-->
+        <module>flight_ops_service</module>
 <!--        <module>pricing-service</module>-->
 <!--        <module>ancillary-service</module>-->
 <!--        <module>booking-service</module>-->
