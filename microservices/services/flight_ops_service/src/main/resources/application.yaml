@@ -1,12 +1,13 @@
 server:
-  port: 5002
+  port: 5005
+
 
 spring:
   application:
-    name: user_service
+    name: flight_ops_service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/airline_db
+    url: jdbc:mysql://localhost:3306/airline_flight_db
     username: root
     password: Pradeep@drait123
 
