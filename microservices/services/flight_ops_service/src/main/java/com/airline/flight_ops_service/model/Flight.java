@@ -1,4 +1,4 @@
-package com.airline.flight_ops_service;
+package com.airline.flight_ops_service.model;
 
 import com.airline.enums.FlightStatus;
 import jakarta.persistence.*;

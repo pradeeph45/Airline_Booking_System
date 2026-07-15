@@ -1,8 +1,8 @@
 package com.airline.flight_ops_service.service.impl;
 
 import com.airline.enums.FlightStatus;
-import com.airline.flight_ops_service.Flight;
-import com.airline.flight_ops_service.FlightRepository;
+import com.airline.flight_ops_service.model.Flight;
+import com.airline.flight_ops_service.repository.FlightRepository;
 import com.airline.flight_ops_service.mapper.FlightMapper;
 import com.airline.flight_ops_service.service.FlightService;
 import com.airline.payload.request.FlightRequest;
@@ -10,7 +10,6 @@ import com.airline.payload.response.AircraftResponse;
 import com.airline.payload.response.AirlineResponse;
 import com.airline.payload.response.AirportResponse;
 import com.airline.payload.response.FlightResponse;
-import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -41,30 +40,56 @@ public class FlightServiceImpl implements FlightService {
 
     @Override
     public Page<FlightResponse> getFlightsByAirline(Long airlineId, Long departureAirportId, Long arrivalAirportId, Pageable pageable) {
-        return null;
+        return flightRepository.findByAirlineId(airlineId,
+                departureAirportId,
+                arrivalAirportId,
+                pageable).map(this::convertToFlightResponse);
     }
 
     @Override
-    public FlightResponse getFlightById(Long id) {
-        return null;
+    public FlightResponse getFlightById(Long id) throws Exception {
+        Flight flight = flightRepository.findById(id).orElseThrow(
+                () -> new Exception("flight not fpund with the id " + id)
+        );
+        return convertToFlightResponse(flight);
     }
 
     @Override
-    public FlightResponse updateFlight(Long id, FlightRequest flightRequest) {
-        return null;
+    public FlightResponse updateFlight(Long id, FlightRequest flightRequest) throws Exception {
+        Flight existing = flightRepository.findById(id).orElseThrow(
+                () -> new Exception("Flight not found with id " + id)
+        );
+        if (flightRequest.getFlightNumber() != null &&
+                flightRepository.existsByFlightNumberAndIdNot(flightRequest.getFlightNumber(), id)) {
+            throw new IllegalArgumentException(
+                    "Flight with number '" + flightRequest.getFlightNumber() + "' already exists");
+        }
+
+        FlightMapper.updateEntity(flightRequest, existing);
+        Flight saved = flightRepository.save(existing);
+        return convertToFlightResponse(saved);
+
     }
 
     @Override
-    public FlightResponse changeStatus(Long id, FlightStatus status) {
-        return null;
+    public FlightResponse changeStatus(Long id, FlightStatus status) throws Exception {
+        Flight existing = flightRepository.findById(id).orElseThrow(
+                () -> new Exception("Flight not found with id " + id)
+        );
+        existing.setStatus(status);
+        Flight saved = flightRepository.save(existing);
+        return convertToFlightResponse(saved);
     }
 
     @Override
-    public void deleteFlight(Long id) {
-
+    public void deleteFlight(Long id, Long airlineId) throws Exception {
+        Flight existing = flightRepository.findByAirlineIdAndId(id, airlineId).orElseThrow(
+                () -> new Exception("Flight not found with id " + id)
+        );
+        flightRepository.delete(existing);
     }
 
-    private FlightResponse convertToFlightResponse(Flight flight){
+    private FlightResponse convertToFlightResponse(Flight flight) {
         AircraftResponse aircraft = AircraftResponse.builder()
                 .id(flight.getAircraftId())
                 .build();

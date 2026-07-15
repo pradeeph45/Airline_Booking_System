@@ -9,7 +9,7 @@ spring:
   datasource:
     url: jdbc:mysql://localhost:3306/airline_flight_db
     username: root
-    password: root
+    password: Pradeep@drait123
 
   jpa:
     hibernate:

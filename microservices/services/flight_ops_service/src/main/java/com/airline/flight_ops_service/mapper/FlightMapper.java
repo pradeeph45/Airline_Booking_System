@@ -1,7 +1,7 @@
 package com.airline.flight_ops_service.mapper;
 
 import com.airline.enums.FlightStatus;
-import com.airline.flight_ops_service.Flight;
+import com.airline.flight_ops_service.model.Flight;
 import com.airline.payload.request.FlightRequest;
 import com.airline.payload.response.AircraftResponse;
 import com.airline.payload.response.AirlineResponse;
