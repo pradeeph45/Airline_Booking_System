@@ -1,0 +1,16 @@
+server:
+  port: 5006
+
+spring:
+  application:
+    name: pricing_service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/airline_pricing_db
+    username: root
+    password: Pradeep@drait123
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
