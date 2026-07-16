@@ -1,12 +1,12 @@
 server:
-  port: 5006
+  port: 5007
 
 spring:
   application:
-    name: pricing_service
+    name: seat_service
 
   datasource:
-    url: jdbc:mysql://localhost:3306/airline_pricing_db
+    url: jdbc:mysql://localhost:3306/airline_seat_db
     username: root
     password: root
 
