@@ -4,9 +4,6 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
-# Java compiled files
-*.class
-
 ### STS ###
 .apt_generated
 .classpath
@@ -23,6 +20,9 @@ target/
 *.iml
 *.ipr
 workspace.xml
+
+# Java compiled files
+*.class
 
 ### NetBeans ###
 /nbproject/private/
