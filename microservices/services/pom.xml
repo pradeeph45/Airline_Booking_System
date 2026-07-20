@@ -40,7 +40,7 @@
         <module>seat_service</module>
         <module>flight_ops_service</module>
         <module>pricing_service</module>
-<!--        <module>ancillary-service</module>-->
+        <module>anciallary_service</module>
 <!--        <module>booking-service</module>-->
 <!--        <module>subscription-service</module>-->
 <!--        <module>payment-service</module>-->

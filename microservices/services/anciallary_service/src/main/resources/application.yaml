@@ -1,0 +1,16 @@
+server:
+  port: 5008
+
+spring:
+  application:
+    name: anciallary_service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/airline_ancillary_db
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
