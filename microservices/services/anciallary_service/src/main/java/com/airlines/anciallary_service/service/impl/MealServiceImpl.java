@@ -6,9 +6,13 @@ import com.airlines.anciallary_service.mapper.MealMapper;
 import com.airlines.anciallary_service.model.Meal;
 import com.airlines.anciallary_service.repository.MealRepository;
 import com.airlines.anciallary_service.service.MealService;
+import com.airlines.anciallary_service.specification.MealSpecification;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -44,34 +48,35 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public List<MealResponse> bulkCreate(Long userId, List<MealRequest> requests) throws Exception {
-//        for (MealRequest request : requests) {
-//            Specification<Meal> spec = MealSpecification.hasCodeAndAirlineId(request.getCode(), airlineId);
-//            if (mealRepository.exists(spec)) {
-//                log.warn("Skipping meal with code {} - already exists for airline {}",
-//                        request.getCode(), airlineId);
-//                continue;
-//            }
-//
-//            Meal meal = Meal.builder()
-//                    .code(request.getCode())
-//                    .name(request.getName())
-//                    .mealType(request.getMealType())
-//                    .dietaryRestriction(request.getDietaryRestriction())
-//                    .ingredients(request.getIngredients())
-//                    .imageUrl(request.getImageUrl())
-//                    .available(request.getAvailable())
-//                    .requiresAdvanceBooking(request.getRequiresAdvanceBooking() != null
-//                            ? request.getRequiresAdvanceBooking() : false)
-//                    .advanceBookingHours(request.getAdvanceBookingHours())
-//                    .displayOrder(request.getDisplayOrder() != null ? request.getDisplayOrder() : 0)
-//                    .airlineId(userId)
-//                    .build();
-//
-//            Meal savedMeal = mealRepository.save(meal);
-//            responses.add(MealMapper.toResponse(savedMeal));
-//        }
-//        return responses;
-   return null;
+        List<MealResponse> responses = new ArrayList<>();
+
+        for (MealRequest request : requests) {
+            Specification<Meal> spec = MealSpecification.hasCodeAndAirlineId(request.getCode(), userId);
+            if (mealRepository.exists(spec)) {
+                continue;
+            }
+
+            Meal meal = Meal.builder()
+                    .code(request.getCode())
+                    .name(request.getName())
+                    .mealType(request.getMealType())
+                    .dietaryRestriction(request.getDietaryRestriction())
+                    .ingredients(request.getIngredients())
+                    .imageUrl(request.getImageUrl())
+                    .available(request.getAvailable())
+                    .requiresAdvanceBooking(request.getRequiresAdvanceBooking() != null
+                            ? request.getRequiresAdvanceBooking() : false)
+                    .advanceBookingHours(request.getAdvanceBookingHours())
+                    .displayOrder(request.getDisplayOrder() != null ? request.getDisplayOrder() : 0)
+                    .airlineId(userId)
+                    .build();
+
+            Meal savedMeal = mealRepository.save(meal);
+            responses.add(MealMapper.toResponse(savedMeal));
+        }
+
+        return responses;
+
     }
 
     @Override
@@ -84,11 +89,10 @@ public class MealServiceImpl implements MealService {
 
     @Override
     public List<MealResponse> getByAirlineId(Long userId) {
-//        Specification<Meal> spec = MealSpecification.hasAirlineId(airlineId);
-//        return mealRepository.findAll(spec).stream()
-//                .map(MealMapper::toResponse)
-//                .collect(Collectors.toList());
-   return List.of();
+        Specification<Meal> spec = MealSpecification.hasAirlineId(userId);
+        return mealRepository.findAll(spec).stream()
+                .map(MealMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @Override
@@ -97,11 +101,11 @@ public class MealServiceImpl implements MealService {
                 .orElseThrow(() -> new Exception("Meal not found with id: " + id));
 
         if (!meal.getCode().equals(request.getCode())) {
-         //   Specification<Meal> spec = MealSpecification.hasCodeAndAirlineId(request.getCode(), airlineId);
-         //   if (mealRepository.exists(spec)) {
+            Specification<Meal> spec = MealSpecification.hasCodeAndAirlineId(request.getCode(), userId);
+            if (mealRepository.exists(spec)) {
                 throw new IllegalArgumentException(
                         "Meal with code " + request.getCode() + " already exists for this airline");
-         //   }
+            }
         }
 
         meal.setCode(request.getCode());

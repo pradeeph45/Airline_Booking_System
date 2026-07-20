@@ -8,6 +8,7 @@ import com.airlines.anciallary_service.model.Meal;
 import com.airlines.anciallary_service.repository.FlightMealRepository;
 import com.airlines.anciallary_service.repository.MealRepository;
 import com.airlines.anciallary_service.service.FlightMealService;
+import com.airlines.anciallary_service.specification.FlightMealSpecification;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
@@ -45,36 +46,33 @@ public class FlightMealServiceImpl implements FlightMealService {
 
     @Override
     public List<FlightMealResponse> bulkCreate(List<FlightMealRequest> requests) throws Exception {
-//        List<FlightMealResponse> responses = new ArrayList<>();
-//
-//        for (FlightMealRequest request : requests) {
-//            Meal meal = mealRepository.findById(request.getMealId())
-//                    .orElseThrow(() -> new Exception(
-//                            "Meal not found with id: " + request.getMealId()));
-//
-////            Specification<FlightMeal> spec = FlightMealSpecification.hasFlightIdAndMealId(
-////                    request.getFlightId(), request.getMealId());
-////            if (flightMealRepository.exists(spec)) {
-////                log.warn("Skipping flight meal - meal {} already assigned to flight {}",
-////                        request.getMealId(), request.getFlightId());
-//                continue;
-//            }
-//
-//            FlightMeal flightMeal = FlightMeal.builder()
-//                    .flightId(request.getFlightId())
-//                    .meal(meal)
-//                    .available(request.getAvailable())
-//                    .price(request.getPrice())
-//                    .displayOrder(request.getDisplayOrder() != null ? request.getDisplayOrder() : 0)
-//                    .build();
-//
-//            FlightMeal saved = flightMealRepository.save(flightMeal);
-//            responses.add(FlightMealMapper.toResponse(saved));
-//        }
-//
-//        log.info("Successfully created {} flight meals", responses.size());
-//        return responses;
-      return null;
+        List<FlightMealResponse> responses = new ArrayList<>();
+
+        for (FlightMealRequest request : requests) {
+            Meal meal = mealRepository.findById(request.getMealId())
+                    .orElseThrow(() -> new Exception(
+                            "Meal not found with id: " + request.getMealId()));
+
+            Specification<FlightMeal> spec = FlightMealSpecification.hasFlightIdAndMealId(
+                    request.getFlightId(), request.getMealId());
+            if (flightMealRepository.exists(spec)) {
+                continue;
+            }
+
+            FlightMeal flightMeal = FlightMeal.builder()
+                    .flightId(request.getFlightId())
+                    .meal(meal)
+                    .available(request.getAvailable())
+                    .price(request.getPrice())
+                    .displayOrder(request.getDisplayOrder() != null ? request.getDisplayOrder() : 0)
+                    .build();
+
+            FlightMeal saved = flightMealRepository.save(flightMeal);
+            responses.add(FlightMealMapper.toResponse(saved));
+        }
+
+        return responses;
+
     }
 
     @Override
@@ -87,11 +85,10 @@ public class FlightMealServiceImpl implements FlightMealService {
 
     @Override
     public List<FlightMealResponse> getByFlightId(Long flightId) {
-//        Specification<FlightMeal> spec = FlightMealSpecification.hasFlightId(flightId);
-//        return flightMealRepository.findAll(spec).stream()
-//                .map(FlightMealMapper::toResponse)
-//                .collect(Collectors.toList());
-        return List.of();
+        Specification<FlightMeal> spec = FlightMealSpecification.hasFlightId(flightId);
+        return flightMealRepository.findAll(spec).stream()
+                .map(FlightMealMapper::toResponse)
+                .collect(Collectors.toList());
     }
 
     @Override

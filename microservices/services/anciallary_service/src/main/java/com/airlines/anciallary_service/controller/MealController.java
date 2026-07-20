@@ -34,16 +34,16 @@ public class MealController {
         return ResponseEntity.status(HttpStatus.CREATED).body(responses);
     }
 
-    @GetMapping("/{id:\\d+}")
-    public ResponseEntity<MealResponse> getMealById(@PathVariable Long id)
-            throws Exception {
-        return ResponseEntity.ok(mealService.getById(id));
-    }
-
     @GetMapping("/airline")
     public ResponseEntity<List<MealResponse>> getMealsByAirlineId(
             @RequestHeader("X-User-Id") Long userId) {
         return ResponseEntity.ok(mealService.getByAirlineId(userId));
+    }
+
+    @GetMapping("/{id:\\d+}")
+    public ResponseEntity<MealResponse> getMealById(@PathVariable Long id)
+            throws Exception {
+        return ResponseEntity.ok(mealService.getById(id));
     }
 
     @PutMapping("/{id:\\d+}")
