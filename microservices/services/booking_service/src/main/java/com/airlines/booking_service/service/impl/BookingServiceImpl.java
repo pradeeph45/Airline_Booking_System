@@ -62,6 +62,7 @@ public class BookingServiceImpl implements BookingService {
                 .map(PassengerRequest::getSeatInstanceId)
                 .collect(Collectors.toList());
         booking.setSeatInstanceIds(seatInstanceIds);
+        booking.setAirlineId(userId);
 
         // Save booking
         booking = bookingRepository.save(booking);

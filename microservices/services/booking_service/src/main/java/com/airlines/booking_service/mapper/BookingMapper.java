@@ -100,8 +100,8 @@ public class BookingMapper {
                 .totalAmount(fareResponse!=null?fareResponse.getTotalPrice():null)
 
 //                arline details
-                .airlineName(flightResponse!=null? flightResponse.getAirline().getName():null)
-                .airlineLogo(flightResponse!=null?flightResponse.getAirline().getLogoUrl():null)
+//                .airlineName(flightResponse!=null? flightResponse.getAirline().getName():null)
+//                .airlineLogo(flightResponse!=null?flightResponse.getAirline().getLogoUrl():null)
 //                contact information
                 .contactInfo(booking.getContactInfo())
 
