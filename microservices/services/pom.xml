@@ -43,7 +43,7 @@
         <module>anciallary_service</module>
         <module>booking_service</module>
 <!--        <module>subscription-service</module>-->
-<!--        <module>payment-service</module>-->
+        <module>payment_service</module>
 <!--        <module>notification-service</module>-->
     </modules>
 
