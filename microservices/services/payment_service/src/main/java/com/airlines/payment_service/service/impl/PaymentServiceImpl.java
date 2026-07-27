@@ -6,12 +6,15 @@ import com.airline.payload.dto.PaymentDTO;
 import com.airline.payload.dto.UserDTO;
 import com.airline.payload.request.PaymentInitiateRequest;
 import com.airline.payload.request.PaymentVerifyRequest;
+import com.airline.payload.response.PaymentLinkResponse;
 import com.airline.payload.response.PaymmentInitiateResponse;
 import com.airlines.payment_service.mapper.PaymentMapper;
 import com.airlines.payment_service.model.Payment;
 import com.airlines.payment_service.repository.PaymentRepository;
 import com.airlines.payment_service.service.PaymentService;
+import com.airlines.payment_service.service.gateway.RazorpayService;
 import lombok.RequiredArgsConstructor;
+import org.json.JSONObject;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
@@ -28,7 +31,7 @@ public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentRepository paymentRepository;
 //    private final PaymentEventProducer paymentEventProducer;
-//    private final RazorpayService razorpayService;
+    private final RazorpayService razorpayService;
 //    private final UserClient userClient;
 
     @Override
@@ -69,12 +72,17 @@ public class PaymentServiceImpl implements PaymentService {
 
 
         //        UserDTO user=userClient.getUserById(payment.getUserId());
+                UserDTO userDTO = new UserDTO();
+                userDTO.setId(1L);
+                userDTO.setFullName("Pradeep H");
+                userDTO.setEmail("praadeep.h@gmail.com");
+                userDTO.setPhone("6574920485");
 
-//                PaymentLinkResponse paymentLinkResponse=razorpayService.createPaymentLink(
-//                        user, payment
-//                );
-//                response.setCheckoutUrl(paymentLinkResponse.getPayment_link_url());
-//                response.setRazorpayOrderId(paymentLinkResponse.getPayment_link_id());
+                PaymentLinkResponse paymentLinkResponse=razorpayService.createPaymentLink(
+                        userDTO, payment
+                );
+                response.setCheckoutUrl(paymentLinkResponse.getPayment_link_url());
+                response.setRazorpayOrderId(paymentLinkResponse.getPayment_link_id());
 
 
             } else if (request.getGateway() == PaymentGateway.STRIPE) {
@@ -93,25 +101,25 @@ public class PaymentServiceImpl implements PaymentService {
     @Override
     public PaymentDTO verifyPayment(PaymentVerifyRequest request) throws Exception {
         // gatway payment
-//        JSONObject paymentDetails = razorpayService
-//                .fetchPaymentDetails(request.getRazorpayPaymentId());
-//
-//        System.out.println("gatway payment details: " + paymentDetails);
-//
-//
-//        String status = paymentDetails.optString("status");
-//        long amount = paymentDetails.optLong("amount");
-//        long amountInRupees = amount / 100;
+        JSONObject paymentDetails = razorpayService
+                .fetchPaymentDetails(request.getRazorpayPaymentId());
+
+        System.out.println("gatway payment details: " + paymentDetails);
+
+
+        String status = paymentDetails.optString("status");
+        long amount = paymentDetails.optLong("amount");
+        long amountInRupees = amount / 100;
 
 
         // Extract 'notes' object
-//        JSONObject notes = paymentDetails.getJSONObject("notes");
-//
-//        Long paymentId = Long.parseLong(notes.optString("payment_id"));
+        JSONObject notes = paymentDetails.getJSONObject("notes");
+
+        Long paymentId = Long.parseLong(notes.optString("payment_id"));
 
 
         Payment payment = paymentRepository.findById(paymentId)
-                .orElseThrow(() -> new PaymentException("Payment not found with ID: " + paymentId));
+                .orElseThrow(() -> new Exception("Payment not found with ID: " + paymentId));
 
 
         boolean isValid = "captured".equalsIgnoreCase(status);
@@ -137,13 +145,13 @@ public class PaymentServiceImpl implements PaymentService {
             // Save payment first
             payment = paymentRepository.save(payment);
             System.out.println("send payment event and payment status is : "+status);
-            paymentEventProducer.sendPaymentCompleted(payment);
+        //    paymentEventProducer.sendPaymentCompleted(payment);
         } else {
             payment.setStatus(PaymentStatus.FAILED);
             payment.setFailureReason("Payment verification failed");
             payment = paymentRepository.save(payment);
 
-            paymentEventProducer.sendPaymentFailed(payment);
+       //     paymentEventProducer.sendPaymentFailed(payment);
         }
 
         return PaymentMapper.toDTO(payment);
