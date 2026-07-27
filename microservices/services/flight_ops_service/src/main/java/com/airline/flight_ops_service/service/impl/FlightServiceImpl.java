@@ -5,6 +5,8 @@ import com.airline.flight_ops_service.model.Flight;
 import com.airline.flight_ops_service.repository.FlightRepository;
 import com.airline.flight_ops_service.mapper.FlightMapper;
 import com.airline.flight_ops_service.service.FlightService;
+import com.airline.flight_ops_service.service.interservice.AircraftIntegrationService;
+import com.airline.flight_ops_service.service.interservice.AirlineIntegrationService;
 import com.airline.payload.request.FlightRequest;
 import com.airline.payload.response.AircraftResponse;
 import com.airline.payload.response.AirlineResponse;
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Service;
 public class FlightServiceImpl implements FlightService {
 
     private final FlightRepository flightRepository;
+    private final AirlineIntegrationService airlineIntegrationService;
+    private final AircraftIntegrationService aircraftIntegrationService;
 
     @Override
     public FlightResponse createFlight(Long airlineId, FlightRequest flightRequest) {
@@ -90,17 +94,14 @@ public class FlightServiceImpl implements FlightService {
     }
 
     private FlightResponse convertToFlightResponse(Flight flight) {
-        AircraftResponse aircraft = AircraftResponse.builder()
-                .id(flight.getAircraftId())
-                .build();
-        AirlineResponse airline = AirlineResponse.builder()
-                .id(flight.getAirlineId())
-                .build();
+        AircraftResponse aircraft = aircraftIntegrationService.getAircraftById(flight.getAircraftId());
+        AirlineResponse airline = airlineIntegrationService.getAirlineById(flight.getAirlineId());
+        System.out.println(airline);
         AirportResponse departureAirport = AirportResponse.builder()
                 .id(flight.getDepartureAirportId())
                 .build();
         AirportResponse arrivalAirport = AirportResponse.builder()
-                .id(flight.getAirlineId())
+                .id(flight.getArrivalAirportId())
                 .build();
         return FlightMapper.toResponse(
                 flight,
