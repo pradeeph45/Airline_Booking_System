@@ -25,6 +25,7 @@ public class FlightServiceImpl implements FlightService {
     private final AirlineClient airlineClient;
     private final LocationClient locationClient;
 
+
     @Override
     public FlightResponse createFlight(Long airlineId, FlightRequest flightRequest) {
         if (flightRepository.existsByFlightNumber(flightRequest.getFlightNumber())) {

@@ -1,0 +1,21 @@
+server:
+  port: 5010
+
+spring:
+  application:
+    name: payment_service
+
+  datasource:
+    url: jdbc:mysql://localhost:3306/airline_payment_db
+    username: root
+    password: root
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+
+razorpay:
+  key:
+    id: rzp_test_THOYzBIZpyw6Og
+    secret: zZ2ctG7ExpFnaM4uMrFGos6P
