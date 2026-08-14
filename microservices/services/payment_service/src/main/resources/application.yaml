@@ -3,12 +3,12 @@ server:
 
 spring:
   application:
-    name: payment_service
+    name: payment-service
 
   datasource:
     url: jdbc:mysql://localhost:3306/airline_payment_db
     username: root
-    password: root
+    password: Pradeep@drait123
 
   jpa:
     hibernate:
@@ -16,6 +16,18 @@ spring:
     show-sql: true
 
 razorpay:
-  key:
-    id: rzp_test_THOYzBIZpyw6Og
+  api:
+    key: rzp_test_THOYzBIZpyw6Og
     secret: zZ2ctG7ExpFnaM4uMrFGos6P
+  callback:
+    base-url: http://localhost:5010
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
+

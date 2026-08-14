@@ -1,9 +1,13 @@
 package com.airlines.booking_service.service.impl;
 
 import com.airline.enums.BookingStatus;
+import com.airline.enums.PaymentGateway;
 import com.airline.payload.request.BookingRequest;
 import com.airline.payload.request.PassengerRequest;
+import com.airline.payload.request.PaymentInitiateRequest;
 import com.airline.payload.response.*;
+import com.airlines.booking_service.client.*;
+import com.airlines.booking_service.integration.PricingIntegrationService;
 import com.airlines.booking_service.mapper.BookingMapper;
 import com.airlines.booking_service.model.Booking;
 import com.airlines.booking_service.model.Passenger;
@@ -29,17 +33,17 @@ public class BookingServiceImpl implements BookingService {
     private final BookingRepository bookingRepository;
     private final PassengerService passengerService;
     private final TicketService ticketService;
-//    private final PricingIntegrationService pricingIntegrationService;
-//    private final PricingClient pricingClient;
-//    private final AncillaryClient ancillaryClient;
-//    private final PaymentClient paymentClient;
-//    private final SeatClient seatClient;
-//    private final FlightClient flightClient;
-//    private final AirlineClient airlineClient;
+    private final PricingIntegrationService pricingIntegrationService;
+    private final PricingClient pricingClient;
+    private final AncillaryClient ancillaryClient;
+    private final PaymentClient paymentClient;
+    private final SeatClient seatClient;
+    private final FlightClient flightClient;
+    private final  AirlineClient airlineClient;
 
 
     @Override
-    public BookingResponse createBooking(BookingRequest request, Long userId) throws Exception {
+    public PaymmentInitiateResponse createBooking(BookingRequest request, Long userId) throws Exception {
         String bookingReference = generateBookingReference();
 
         Set<Passenger> passengers = new HashSet<>();
@@ -49,20 +53,20 @@ public class BookingServiceImpl implements BookingService {
             passengers.add(passenger);
         }
 
-     //   FlightResponse flightResponse = flightClient.getFlightById(request.getFlightId());
+        FlightResponse flightResponse = flightClient.getFlightById(request.getFlightId());
 
         // Create booking entity with cross-service IDs
         Booking booking = BookingMapper.toEntity(
                 request, userId, passengers, bookingReference);
         booking.setStatus(BookingStatus.PENDING);
-    //    booking.setAirlineId(flightResponse.getAirline().getId());
+        booking.setAirlineId(flightResponse.getAirline().getId());
 
         // Set seat instance IDs from passenger requests
         List<Long> seatInstanceIds = request.getPassengers().stream()
                 .map(PassengerRequest::getSeatInstanceId)
                 .collect(Collectors.toList());
         booking.setSeatInstanceIds(seatInstanceIds);
-        booking.setAirlineId(userId);
+        booking.setAirlineId(flightResponse.getAirline().getId());
 
         // Save booking
         booking = bookingRepository.save(booking);
@@ -79,34 +83,31 @@ public class BookingServiceImpl implements BookingService {
         // Calculate total amount
 
         int passengerCount = booking.getPassengers().size();
-//        Double fareTotal = pricingIntegrationService.calculateFareTotal(booking.getFareId()) * passengerCount;
-//        Double seatPrice= seatClient.calculateSeatPrice(booking.getSeatInstanceIds());
-//        Double ancillaryPrice=ancillaryClient.calculateAncillariesPrice(booking.getAncillaryIds());
-//        Double mealPrice=ancillaryClient.calculateMealPrice(booking.getMealIds());
+        Double fareTotal = pricingIntegrationService.calculateFareTotal(booking.getFareId()) * passengerCount;
+        Double seatPrice= seatClient.calculateSeatPrice(booking.getSeatInstanceIds());
+        Double ancillaryPrice=ancillaryClient.calculateAncillariesPrice(booking.getAncillaryIds());
+        Double mealPrice=ancillaryClient.calculateMealPrice(booking.getMealIds());
 
-     //   Double totalPrice=fareTotal+seatPrice+ancillaryPrice+mealPrice;
+        Double totalPrice=fareTotal+seatPrice+ancillaryPrice+mealPrice;
 
 
         // Initiate payment
-//        PaymentInitiateRequest paymentRequest = PaymentInitiateRequest.builder()
-//                .userId(userId)
-//                .bookingId(booking.getId())
-//                .amount(totalPrice)
-//                .gateway(PaymentGateway.RAZORPAY)
-//                .description("Booking: " + bookingReference)
-//                .build();
+        PaymentInitiateRequest paymentRequest = PaymentInitiateRequest.builder()
+                .userId(userId)
+                .bookingId(booking.getId())
+                .amount(totalPrice)
+                .gateway(PaymentGateway.RAZORPAY)
+                .description("Booking: " + bookingReference)
+                .build();
 
- //       System.out.println("Booking created successfully: {}   - "+paymentRequest);
+        System.out.println("Booking created successfully: {}   - "+paymentRequest);
 
-   //     PaymentInitiateResponse paymentInit = paymentClient.initiatePayment(paymentRequest, userId);
-//        if (paymentInit == null) {
-//            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
-//                    "Payment service is temporarily unavailable. Please retry.");
-//        }
-//        return paymentInit;
-
-
-        return convertBookingResponse(booking);
+        PaymmentInitiateResponse paymentInit = paymentClient.initiatePayment(paymentRequest, userId);
+        if (paymentInit == null) {
+            throw new ResponseStatusException(HttpStatus.SERVICE_UNAVAILABLE,
+                    "Payment service is temporarily unavailable. Please retry.");
+        }
+        return paymentInit;
     }
 
     @Override

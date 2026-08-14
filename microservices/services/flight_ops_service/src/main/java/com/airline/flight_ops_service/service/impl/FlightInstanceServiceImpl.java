@@ -1,5 +1,7 @@
 package com.airline.flight_ops_service.service.impl;
 
+import com.airline.flight_ops_service.client.AirlineClient;
+import com.airline.flight_ops_service.client.LocationClient;
 import com.airline.flight_ops_service.mapper.FlightInstanceMapper;
 import com.airline.flight_ops_service.model.Flight;
 import com.airline.flight_ops_service.model.FlightInstance;
@@ -27,31 +29,57 @@ public class FlightInstanceServiceImpl implements FlightInstanceService {
 
     private final FlightInstanceRepository flightInstanceRepository;
     private final FlightRepository flightRepository;
+    private final AirlineClient airlineClient;
+    private final LocationClient locationClient;
 
 
     @Override
     public FlightInstanceResponse createFlightInstanceWithCabins(
-        Long airlineId, FlightInstanceRequest request) throws Exception{
+            Long userId,
+            FlightInstanceRequest request) throws Exception {
 
-            Flight flight = flightRepository.findById(request.getFlightId())
-                    .orElseThrow(() -> new Exception("Flight not found"));
+        Flight flight = flightRepository.findById(request.getFlightId())
+                .orElseThrow(() ->
+                        new Exception(
+                                "Flight not found with id: "
+                                        + request.getFlightId()
+                        ));
 
-            AircraftResponse aircraft = AircraftResponse.builder()
-                    .id(1L)
-                    .totalSeats(90)
-                    .build();
+        // Get actual airline from the flight
+        Long airlineId = flight.getAirlineId();
 
-            FlightInstance instance = FlightInstanceMapper.toEntity(request, flight);
-            instance.setAirlineId(airlineId);
-            instance.setFlight(flight);
-            instance.setDepartureAirportId(request.getDepartureAirportId());
-            instance.setArrivalAirportId(request.getArrivalAirportId());
-            instance.setTotalSeats(aircraft.getTotalSeats());
-            instance.setAvailableSeats(aircraft.getTotalSeats());
+        // Get actual aircraft from airline-core-service
+        AircraftResponse aircraft =
+                airlineClient.getAircraftById(
+                        flight.getAircraftId()
+                );
 
-            FlightInstance flightInstance = flightInstanceRepository.save(instance);
+        FlightInstance instance =
+                FlightInstanceMapper.toEntity(request, flight);
 
-            return getFlightInstance(flightInstance);
+        instance.setAirlineId(airlineId);
+        instance.setFlight(flight);
+
+        instance.setDepartureAirportId(
+                request.getDepartureAirportId()
+        );
+
+        instance.setArrivalAirportId(
+                request.getArrivalAirportId()
+        );
+
+        instance.setTotalSeats(
+                aircraft.getTotalSeats()
+        );
+
+        instance.setAvailableSeats(
+                aircraft.getTotalSeats()
+        );
+
+        FlightInstance saved =
+                flightInstanceRepository.save(instance);
+
+        return getFlightInstance(saved);
     }
 
     @Override
@@ -116,18 +144,10 @@ public class FlightInstanceServiceImpl implements FlightInstanceService {
 
     private FlightInstanceResponse getFlightInstance(FlightInstance flightInstance) throws Exception {
 
-    AirlineResponse airlineResponse = AirlineResponse.builder()
-            .id(flightInstance.getAirlineId())
-            .build();
-    AirportResponse departureAirport = AirportResponse.builder()
-            .id(flightInstance.getDepartureAirportId())
-            .build();
-        AirportResponse arrivalAirport = AirportResponse.builder()
-                .id(flightInstance.getArrivalAirportId())
-                .build();
-         AircraftResponse aircraftResponse = AircraftResponse. builder()
-                 .id(flightInstance.getFlight().getAircraftId())
-                 .build();
+    AirlineResponse airlineResponse = airlineClient.getAirlineById(flightInstance.getAirlineId());
+    AirportResponse departureAirport = locationClient.getAirportById(flightInstance.getDepartureAirportId());
+    AirportResponse arrivalAirport = locationClient.getAirportById(flightInstance.getArrivalAirportId());
+    AircraftResponse aircraftResponse = airlineClient.getAircraftById(flightInstance.getFlight().getAircraftId());
 
          return FlightInstanceMapper.toResponse(
                  flightInstance,

@@ -3,12 +3,13 @@ package com.airlines.booking_service.service;
 import com.airline.enums.BookingStatus;
 import com.airline.payload.request.BookingRequest;
 import com.airline.payload.response.BookingResponse;
+import com.airline.payload.response.PaymmentInitiateResponse;
 
 import java.util.List;
 
 public interface BookingService {
 
-    BookingResponse createBooking(BookingRequest request, Long userId)
+    PaymmentInitiateResponse createBooking(BookingRequest request, Long userId)
             throws Exception;
 
     BookingResponse updateBooking(Long id, BookingRequest request)

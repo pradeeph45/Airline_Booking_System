@@ -3,6 +3,7 @@ package com.airlines.booking_service.controller;
 import com.airline.enums.BookingStatus;
 import com.airline.payload.request.BookingRequest;
 import com.airline.payload.response.BookingResponse;
+import com.airline.payload.response.PaymmentInitiateResponse;
 import com.airlines.booking_service.service.BookingService;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
@@ -20,11 +21,11 @@ public class BookingController {
     private final BookingService bookingService;
 
     @PostMapping
-    public ResponseEntity<BookingResponse> createBooking(
+    public ResponseEntity<PaymmentInitiateResponse> createBooking(
             @Valid @RequestBody BookingRequest request,
             @RequestHeader("X-User-Id") Long userId)
             throws Exception {
-        BookingResponse response = bookingService.createBooking(request, userId);
+        PaymmentInitiateResponse response = bookingService.createBooking(request,userId);
         return ResponseEntity.status(HttpStatus.CREATED).body(response);
     }
 

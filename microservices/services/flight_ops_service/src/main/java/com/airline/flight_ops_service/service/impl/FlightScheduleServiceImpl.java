@@ -1,6 +1,7 @@
 package com.airline.flight_ops_service.service.impl;
 
 import com.airline.enums.FlightStatus;
+import com.airline.flight_ops_service.client.LocationClient;
 import com.airline.flight_ops_service.mapper.FlightScheduleMapper;
 import com.airline.flight_ops_service.model.Flight;
 import com.airline.flight_ops_service.model.FlightSchedule;
@@ -29,6 +30,7 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
     private final FlightScheduleRepository flightScheduleRepository;
     private final FlightRepository flightRepository;
     private final FlightInstanceService flightInstanceService;
+    private final LocationClient locationClient;
 
     @Override
     public FlightScheduleResponse createFlightSchedule(Long userId, FlightScheduleRequest request) throws Exception {
@@ -118,12 +120,8 @@ public class FlightScheduleServiceImpl implements FlightScheduleService {
     }
 
     private FlightScheduleResponse getFlightScheduleResponse(FlightSchedule flightSchedule){
-        AirportResponse departureAirport = AirportResponse.builder()
-                .id(flightSchedule.getDepartureAirportId())
-                .build();
-        AirportResponse arrivalAirport = AirportResponse.builder()
-                .id(flightSchedule.getArrivalAirportId())
-                .build();
+        AirportResponse departureAirport = locationClient.getAirportById(flightSchedule.getDepartureAirportId());
+        AirportResponse arrivalAirport = locationClient.getAirportById(flightSchedule.getArrivalAirportId());
         return FlightScheduleMapper.toResponse(
                 flightSchedule,arrivalAirport,departureAirport
         );
