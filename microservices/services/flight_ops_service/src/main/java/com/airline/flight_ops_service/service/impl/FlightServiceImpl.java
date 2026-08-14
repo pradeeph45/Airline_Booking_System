@@ -1,6 +1,8 @@
 package com.airline.flight_ops_service.service.impl;
 
 import com.airline.enums.FlightStatus;
+import com.airline.flight_ops_service.client.AirlineClient;
+import com.airline.flight_ops_service.client.LocationClient;
 import com.airline.flight_ops_service.model.Flight;
 import com.airline.flight_ops_service.repository.FlightRepository;
 import com.airline.flight_ops_service.mapper.FlightMapper;
@@ -20,6 +22,8 @@ import org.springframework.stereotype.Service;
 public class FlightServiceImpl implements FlightService {
 
     private final FlightRepository flightRepository;
+    private final AirlineClient airlineClient;
+    private final LocationClient locationClient;
 
     @Override
     public FlightResponse createFlight(Long airlineId, FlightRequest flightRequest) {
@@ -90,18 +94,11 @@ public class FlightServiceImpl implements FlightService {
     }
 
     private FlightResponse convertToFlightResponse(Flight flight) {
-        AircraftResponse aircraft = AircraftResponse.builder()
-                .id(flight.getAircraftId())
-                .build();
-        AirlineResponse airline = AirlineResponse.builder()
-                .id(flight.getAirlineId())
-                .build();
-        AirportResponse departureAirport = AirportResponse.builder()
-                .id(flight.getDepartureAirportId())
-                .build();
-        AirportResponse arrivalAirport = AirportResponse.builder()
-                .id(flight.getAirlineId())
-                .build();
+        AircraftResponse aircraft = airlineClient.getAircraftById(flight.getAircraftId());
+        AirlineResponse airline = airlineClient.getAirlineById(flight.getAirlineId());
+        System.out.println(airline);
+        AirportResponse departureAirport = locationClient.getAirportById(flight.getDepartureAirportId());
+        AirportResponse arrivalAirport = locationClient.getAirportById(flight.getArrivalAirportId());
         return FlightMapper.toResponse(
                 flight,
                 aircraft,

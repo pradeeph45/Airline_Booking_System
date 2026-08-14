@@ -4,7 +4,7 @@ server:
 
 spring:
   application:
-    name: flight_ops_service
+    name: flight-ops-service
 
   datasource:
     url: jdbc:mysql://localhost:3306/airline_flight_db
@@ -15,3 +15,12 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: true
+
+eureka:
+  client:
+    register-with-eureka: true
+    fetch-registry: true
+    service-url:
+      defaultZone: http://localhost:8761/eureka/
+  instance:
+    prefer-ip-address: true
