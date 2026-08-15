@@ -11,5 +11,5 @@ public interface SeatClient {
 
     @PostMapping("/api/seat-instances/price/total")
     Double calculateSeatPrice(@RequestBody List<Long> seatInstanceIds);
-    
+
 }
