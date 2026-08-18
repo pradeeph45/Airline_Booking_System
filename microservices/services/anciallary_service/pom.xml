@@ -128,6 +128,17 @@
 					</execution>
 				</executions>
 			</plugin>
+			<plugin>
+				<groupId>com.google.cloud.tools</groupId>
+				<artifactId>jib-maven-plugin</artifactId>
+				<version>3.5.2</version>
+
+				<configuration>
+					<to>
+						<image>pradeeph45/gds-ancillary:1.0.0</image>
+					</to>
+				</configuration>
+			</plugin>
 		</plugins>
 	</build>
 

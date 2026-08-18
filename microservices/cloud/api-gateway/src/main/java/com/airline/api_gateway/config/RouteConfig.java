@@ -6,6 +6,8 @@ import org.springframework.cloud.gateway.server.mvc.handler.HandlerFunctions;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
+import org.springframework.http.HttpStatus;
+import org.springframework.web.server.ResponseStatusException;
 import org.springframework.web.servlet.function.*;
 
 @Configuration
@@ -137,6 +139,16 @@ public class RouteConfig {
 //                .filter(CircuitBreakerFilterFunctions.circuitBreaker("payment-service-cb", URI.create("forward:/fallback")))
  //               .before(this::jwtAuthFilter)
                 .build();
+    }
+
+    private ServerRequest jwtAuthFilter(ServerRequest request){
+//        //String authHeader = request.headers().firstHeader(JwtConstant.JWT_HEADER);
+//
+//        if(authHeader == null || authHeader.startsWith(JwtConstant.TOKEN_PREFIX)){
+//            throw new ResponseStatusException(HttpStatus.UNAUTHORIZED,
+//                    "missing or invalid authorization token");
+//        }
+        return null;
     }
 
 }
