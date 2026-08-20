@@ -15,6 +15,9 @@ spring:
       ddl-auto: update
     show-sql: true
 
+  kafka:
+    bootstrap-servers: localhost:9092
+
 razorpay:
   api:
     key: rzp_test_THOYzBIZpyw6Og

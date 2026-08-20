@@ -1,7 +1,9 @@
 package com.airline.flight_ops_service.service.impl;
 
+import com.airline.event.FlightInstanceCreatedEvent;
 import com.airline.flight_ops_service.client.AirlineClient;
 import com.airline.flight_ops_service.client.LocationClient;
+import com.airline.flight_ops_service.event.FlightInstanceEventProducer;
 import com.airline.flight_ops_service.mapper.FlightInstanceMapper;
 import com.airline.flight_ops_service.model.Flight;
 import com.airline.flight_ops_service.model.FlightInstance;
@@ -13,6 +15,7 @@ import com.airline.payload.response.AircraftResponse;
 import com.airline.payload.response.AirlineResponse;
 import com.airline.payload.response.AirportResponse;
 import com.airline.payload.response.FlightInstanceResponse;
+import feign.FeignException;
 import jakarta.persistence.EntityNotFoundException;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -31,6 +34,7 @@ public class FlightInstanceServiceImpl implements FlightInstanceService {
     private final FlightRepository flightRepository;
     private final AirlineClient airlineClient;
     private final LocationClient locationClient;
+    private final FlightInstanceEventProducer flightInstanceEventProducer;
 
 
     @Override
@@ -46,7 +50,7 @@ public class FlightInstanceServiceImpl implements FlightInstanceService {
                         ));
 
         // Get actual airline from the flight
-        Long airlineId = flight.getAirlineId();
+        Long airlineId = getAirlineForUser(userId);
 
         // Get actual aircraft from airline-core-service
         AircraftResponse aircraft =
@@ -76,10 +80,19 @@ public class FlightInstanceServiceImpl implements FlightInstanceService {
                 aircraft.getTotalSeats()
         );
 
-        FlightInstance saved =
+        FlightInstance flightInstance =
                 flightInstanceRepository.save(instance);
 
-        return getFlightInstance(saved);
+        flightInstanceEventProducer.sendFlightInstanceCreated(
+                FlightInstanceCreatedEvent.builder()
+                        .flightInstanceId(flightInstance.getId())
+                        .aircraftId(flight.getAircraftId())
+                        .flightId(flight.getId())
+                        .build()
+        );
+        System.out.println("Publish event for seat-service to create FlightInstanceCabins ----- ");
+
+        return getFlightInstance(instance);
     }
 
     @Override
@@ -156,6 +169,18 @@ public class FlightInstanceServiceImpl implements FlightInstanceService {
                  departureAirport,
                  arrivalAirport
          );
+    }
+
+    private Long getAirlineForUser(Long userId) {
+        try {
+            AirlineResponse airline = airlineClient.getAirlineByOwner(userId);
+            return airline.getId();
+        } catch (FeignException.NotFound e) {
+            throw new EntityNotFoundException("No airline found for user: " + userId);
+        } catch (FeignException e) {
+            throw new RuntimeException(
+                    "Failed to fetch airline from airline-core-service: " + e.getMessage(), e);
+        }
     }
 
 }

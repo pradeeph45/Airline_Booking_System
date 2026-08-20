@@ -8,6 +8,8 @@ import com.airline.payload.request.PaymentInitiateRequest;
 import com.airline.payload.request.PaymentVerifyRequest;
 import com.airline.payload.response.PaymentLinkResponse;
 import com.airline.payload.response.PaymmentInitiateResponse;
+import com.airlines.payment_service.client.UserClient;
+import com.airlines.payment_service.event.PaymentEventProducer;
 import com.airlines.payment_service.mapper.PaymentMapper;
 import com.airlines.payment_service.model.Payment;
 import com.airlines.payment_service.repository.PaymentRepository;
@@ -30,9 +32,9 @@ import java.util.stream.Collectors;
 public class PaymentServiceImpl implements PaymentService {
 
     private final PaymentRepository paymentRepository;
-//    private final PaymentEventProducer paymentEventProducer;
+    private final PaymentEventProducer paymentEventProducer;
     private final RazorpayService razorpayService;
-//    private final UserClient userClient;
+    private final UserClient userClient;
 
     @Override
     public PaymmentInitiateResponse initiatePayment(PaymentInitiateRequest request) throws Exception {
@@ -71,12 +73,7 @@ public class PaymentServiceImpl implements PaymentService {
             if (request.getGateway() == PaymentGateway.RAZORPAY) {
 
 
-        //        UserDTO user=userClient.getUserById(payment.getUserId());
-                UserDTO userDTO = new UserDTO();
-                userDTO.setId(1L);
-                userDTO.setFullName("Pradeep H");
-                userDTO.setEmail("praadeep.h@gmail.com");
-                userDTO.setPhone("6574920485");
+                UserDTO userDTO=userClient.getUserById(payment.getUserId());
 
                 PaymentLinkResponse paymentLinkResponse=razorpayService.createPaymentLink(
                         userDTO, payment
@@ -145,13 +142,13 @@ public class PaymentServiceImpl implements PaymentService {
             // Save payment first
             payment = paymentRepository.save(payment);
             System.out.println("send payment event and payment status is : "+status);
-        //    paymentEventProducer.sendPaymentCompleted(payment);
+            paymentEventProducer.sendPaymentCompleted(payment);
         } else {
             payment.setStatus(PaymentStatus.FAILED);
             payment.setFailureReason("Payment verification failed");
             payment = paymentRepository.save(payment);
 
-       //     paymentEventProducer.sendPaymentFailed(payment);
+            paymentEventProducer.sendPaymentFailed(payment);
         }
 
         return PaymentMapper.toDTO(payment);
